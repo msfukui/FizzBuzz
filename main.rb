@@ -35,13 +35,13 @@ else
 	# 計算結果を整形して出力。
 	# 3 桁以上の数値の整形はちょっと面倒なのでいったんあきらめ。
   puts "結果:"
-  out.exec.each_with_index { |item,index|
+  out.exec.each_with_index do |item,index|
     printf "%3d: %-9s ", index+start_number, item
 		# 5 個毎に改行。
     if (index+1) % 5 == 0 then
       print "\n"
     end
-  }
+  end
 	# 表示数が 5 で割り切れない時は最後に改行を追加。
   unless (end_number-start_number+1) % 5 == 0 then
     print "\n"
