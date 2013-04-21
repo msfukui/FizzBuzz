@@ -5,7 +5,7 @@ color_schemes:
   inverted:
     success:
       name: green
-      bold: true
+      bold: false
     failure:
       name: red
       bold: true
