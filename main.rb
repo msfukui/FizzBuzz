@@ -3,6 +3,7 @@ base_dir  =  File.expand_path(File.join(File.dirname(__FILE__), "."))
 lib_dir   =  File.join(base_dir, "lib")
 $LOAD_PATH.unshift(lib_dir)
 
+require 'UsedFizzBuzz'
 require 'FizzBuzz'
 
 print "FizzBuzz したい開始と終了の数値を入力して Enter キーを押してください。[1-100]: "

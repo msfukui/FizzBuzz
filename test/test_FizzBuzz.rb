@@ -1,8 +1,7 @@
 # encoding: utf-8
-require 'rubygems'
-gem 'test-unit'
-require 'test/unit'
+require 'test_helper'
 
+require 'UsedFizzBuzz'
 require 'FizzBuzz'
 
 class FizzBuzzTest < Test::Unit::TestCase
@@ -43,44 +42,28 @@ class FizzBuzzTest < Test::Unit::TestCase
   #def teardown
   #end
 
-  # コンストラクタの例外テスト
-  def test_initialize_raise
-    assert_raise(ArgumentError,"開始の値または終了の値に数値以外の値を指定しました。") { FizzBuzz.new "Fizz", 5  }
-    assert_raise(ArgumentError,"開始の値または終了の値に数値以外の値を指定しました。") { FizzBuzz.new 5, "Buzz" }
-    assert_raise(ArgumentError,"開始の値または終了の値に数値以外の値を指定しました。") { FizzBuzz.new "Fizz", "Buzz" }
-
-    assert_raise(ArgumentError,"開始の値または終了の値に０以下の値を指定しました。") { FizzBuzz.new -1, 5  }
-    assert_raise(ArgumentError,"開始の値または終了の値に０以下の値を指定しました。") { FizzBuzz.new  0, 5  }
-    assert_raise(ArgumentError,"開始の値または終了の値に０以下の値を指定しました。") { FizzBuzz.new  5, 0  }
-    assert_raise(ArgumentError,"開始の値または終了の値に０以下の値を指定しました。") { FizzBuzz.new  5, -1 }
-    assert_raise(ArgumentError,"開始の値または終了の値に０以下の値を指定しました。") { FizzBuzz.new  0, 0  }
-
-    assert_raise(ArgumentError,"開始の値に終了の値と同じか大きい値を指定しました。") { FizzBuzz.new  5, 5  }
-    assert_raise(ArgumentError,"開始の値に終了の値と同じか大きい値を指定しました。") { FizzBuzz.new  6, 5  }
-  end
-
-  # クラスメソッド judge の例外テスト
+  # メソッド judge の例外テスト
   def test_judge_raise
-    assert_raise(ArgumentError,"数値以外の値を指定しました。") { FizzBuzz.judge( "Fizz" ) }
-    assert_raise(ArgumentError,"数値以外の値を指定しました。") { FizzBuzz.judge( "Buzz" ) }
-    assert_raise(ArgumentError,"数値以外の値を指定しました。") { FizzBuzz.judge( "Fizz Buzz" ) }
+    assert_raise(ArgumentError,"数値以外の値を指定しました。") { @testcase1.judge( "Fizz" ) }
+    assert_raise(ArgumentError,"数値以外の値を指定しました。") { @testcase1.judge( "Buzz" ) }
+    assert_raise(ArgumentError,"数値以外の値を指定しました。") { @testcase1.judge( "Fizz Buzz" ) }
 
-    assert_raise(ArgumentError,"０以下の値を指定しました。") { FizzBuzz.judge(   0 ) }
-    assert_raise(ArgumentError,"０以下の値を指定しました。") { FizzBuzz.judge(  -1 ) }
-    assert_raise(ArgumentError,"０以下の値を指定しました。") { FizzBuzz.judge(  -3 ) }
-    assert_raise(ArgumentError,"０以下の値を指定しました。") { FizzBuzz.judge(  -5 ) }
-    assert_raise(ArgumentError,"０以下の値を指定しました。") { FizzBuzz.judge(  -8 ) }
-    assert_raise(ArgumentError,"０以下の値を指定しました。") { FizzBuzz.judge( -15 ) }
+    assert_raise(ArgumentError,"０以下の値を指定しました。") { @testcase1.judge(   0 ) }
+    assert_raise(ArgumentError,"０以下の値を指定しました。") { @testcase1.judge(  -1 ) }
+    assert_raise(ArgumentError,"０以下の値を指定しました。") { @testcase1.judge(  -3 ) }
+    assert_raise(ArgumentError,"０以下の値を指定しました。") { @testcase1.judge(  -5 ) }
+    assert_raise(ArgumentError,"０以下の値を指定しました。") { @testcase1.judge(  -8 ) }
+    assert_raise(ArgumentError,"０以下の値を指定しました。") { @testcase1.judge( -15 ) }
   end
 
-  # クラスメソッド judge のロジックテスト
+  # メソッド judge のロジックテスト
   def test_judge
-    assert_equal 1,          FizzBuzz.judge( 1 )
-    assert_equal 2,          FizzBuzz.judge( 2 )
-    assert_equal "Fizz",     FizzBuzz.judge( 3 )
-    assert_equal "Buzz",     FizzBuzz.judge( 5 )
-    assert_equal 8,          FizzBuzz.judge( 8 )
-    assert_equal "Fizz Buzz",FizzBuzz.judge( 15 )
+    assert_equal 1,          @testcase1.judge( 1 )
+    assert_equal 2,          @testcase1.judge( 2 )
+    assert_equal "Fizz",     @testcase1.judge( 3 )
+    assert_equal "Buzz",     @testcase1.judge( 5 )
+    assert_equal 8,          @testcase1.judge( 8 )
+    assert_equal "Fizz Buzz",@testcase1.judge( 15 )
   end
 
   # メソッド exec のロジックテスト
