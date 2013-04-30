@@ -1,3 +1,4 @@
 .vimprojects
 tags
 .*.swp
+coverage
