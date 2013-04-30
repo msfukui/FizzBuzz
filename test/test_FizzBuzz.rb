@@ -1,7 +1,6 @@
 # encoding: utf-8
 require 'test_helper'
 
-require 'UsedFizzBuzz'
 require 'FizzBuzz'
 
 class FizzBuzzTest < Test::Unit::TestCase

@@ -32,6 +32,6 @@ class UsedFizzBuzzTest < Test::Unit::TestCase
 
   # メソッド judge の例外テスト
   def test_judge_raise
-    assert_raise("抽象クラス\"UsedFizzBuzz\"の抽象メソッド\"judge\"を呼び出しました。") { UsedFizzBuzz.judge( 1 ) }
+    assert_raise("抽象クラス\"UsedFizzBuzz\"の抽象メソッド\"judge\"を呼び出しました。") { @testcase1.judge( 1 ) }
   end
 end
