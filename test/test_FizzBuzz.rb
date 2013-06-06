@@ -3,6 +3,14 @@ require 'test_helper'
 
 require 'FizzBuzz'
 
+# メソッド rand を Mock に差し替えたクラスを用意
+class MockFizzBuzz < FizzBuzz
+  # 値をそのまま返すだけにする。
+  def rand( number )
+    return number
+  end
+end
+
 class FizzBuzzTest < Test::Unit::TestCase
   # test_ が呼び出される前にテストフレームワーク側で毎回呼び出される。
   # テストで使用するインスタンス生成。
@@ -35,6 +43,9 @@ class FizzBuzzTest < Test::Unit::TestCase
     @testcase = FizzBuzz.new
     @testmean = @testmean1 + @testmean2 + @testmean3 + @testmean4 + @testmean5  \
       + @testmean6 + @testmean7 + @testmean8 + @testmean9 + @testmean10
+
+    # rand を Mock に差し替えたオブジェクト
+    @testcase_mock_rand = MockFizzBuzz.new
   end
 
   # test_ が呼び出された後にテストフレームワーク側で毎回呼び出される。
@@ -81,5 +92,21 @@ class FizzBuzzTest < Test::Unit::TestCase
     assert_equal @testmean12, @testcase12.exec
 
     assert_equal @testmean, @testcase.exec
+  end
+
+  # メソッド rand_judge の例外テスト
+  def test_rand_judge_raise
+    assert_raise(ArgumentError,"数値以外の値を指定しました。") { @testcase_mock_rand.rand_judge( "Fizz Buzz" ) }
+
+    assert_raise(ArgumentError,"０以下の値を指定しました。") { @testcase_mock_rand.rand_judge(  0 ) }
+    assert_raise(ArgumentError,"０以下の値を指定しました。") { @testcase_mock_rand.rand_judge( -1 ) }
+  end
+
+  # メソッド rand_judge のロジックテスト
+  def test_rand_judge
+    assert_equal "Fizz Buzz", @testcase_mock_rand.rand_judge( 29 ) # 30
+    assert_equal "Fizz"     , @testcase_mock_rand.rand_judge(  8 ) #  9
+    assert_equal "Buzz"     , @testcase_mock_rand.rand_judge( 64 ) # 65
+    assert_equal 94         , @testcase_mock_rand.rand_judge( 93 ) # 94
   end
 end
