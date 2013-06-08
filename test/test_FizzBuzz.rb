@@ -38,12 +38,12 @@ class FizzBuzzTest < Test::Unit::TestCase
 
     # rand_judge 用のテストデータ
     # rand を Stub に差し替えたオブジェクトを生成
-    @testcase_mock_rand = FizzBuzz.new
-    stub( @testcase_mock_rand ).rand( 31 ) { 30 } # 指定した値 - 1 を返却する。
-    stub( @testcase_mock_rand ).rand( 10 ) {  9 }
-    stub( @testcase_mock_rand ).rand( 66 ) { 65 }
-    stub( @testcase_mock_rand ).rand( 95 ) { 94 }
-    stub( @testcase_mock_rand ).rand { 2 }
+    @testcase_stub_rand = FizzBuzz.new
+    stub( @testcase_stub_rand ).rand( 31 ) { 30 } # 指定した値 - 1 を返却する。
+    stub( @testcase_stub_rand ).rand( 10 ) {  9 }
+    stub( @testcase_stub_rand ).rand( 66 ) { 65 }
+    stub( @testcase_stub_rand ).rand( 95 ) { 94 }
+    stub( @testcase_stub_rand ).rand { 2 }
   end
 
   # test_ が呼び出された後にテストフレームワーク側で毎回呼び出される。
@@ -110,17 +110,17 @@ class FizzBuzzTest < Test::Unit::TestCase
 
   # メソッド rand_judge の例外テスト
   def test_rand_judge_raise
-    assert_raise(ArgumentError,"数値以外の値を指定しました。") { @testcase_mock_rand.rand_judge( "Fizz Buzz" ) }
+    assert_raise(ArgumentError,"数値以外の値を指定しました。") { @testcase_stub_rand.rand_judge( "Fizz Buzz" ) }
 
-    assert_raise(ArgumentError,"０以下の値を指定しました。")   { @testcase_mock_rand.rand_judge(  0 ) }
-    assert_raise(ArgumentError,"０以下の値を指定しました。")   { @testcase_mock_rand.rand_judge( -1 ) }
+    assert_raise(ArgumentError,"０以下の値を指定しました。")   { @testcase_stub_rand.rand_judge(  0 ) }
+    assert_raise(ArgumentError,"０以下の値を指定しました。")   { @testcase_stub_rand.rand_judge( -1 ) }
   end
 
   # メソッド rand_judge のロジックテスト
   def test_rand_judge
-    assert_equal "Fizz Buzz", @testcase_mock_rand.rand_judge( 30 ) # 30 -> Fizz Buzz を返却するように Stub を設定。
-    assert_equal "Fizz"     , @testcase_mock_rand.rand_judge(  9 )
-    assert_equal "Buzz"     , @testcase_mock_rand.rand_judge( 65 )
-    assert_equal 94         , @testcase_mock_rand.rand_judge( 94 )
+    assert_equal "Fizz Buzz", @testcase_stub_rand.rand_judge( 30 ) # 30 -> Fizz Buzz を返却するように Stub を設定。
+    assert_equal "Fizz"     , @testcase_stub_rand.rand_judge(  9 )
+    assert_equal "Buzz"     , @testcase_stub_rand.rand_judge( 65 )
+    assert_equal 94         , @testcase_stub_rand.rand_judge( 94 )
   end
 end
