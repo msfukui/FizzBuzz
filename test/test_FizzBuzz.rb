@@ -3,14 +3,6 @@ require 'test_helper'
 
 require 'FizzBuzz'
 
-# メソッド rand を Mock に差し替えたクラスを用意
-class MockFizzBuzz < FizzBuzz
-  # 値をそのまま返すだけにする。
-  def rand( number )
-    return number
-  end
-end
-
 class FizzBuzzTest < Test::Unit::TestCase
   # test_ が呼び出される前にテストフレームワーク側で毎回呼び出される。
   # テストで使用するインスタンス生成。
@@ -44,13 +36,35 @@ class FizzBuzzTest < Test::Unit::TestCase
     @testmean = @testmean1 + @testmean2 + @testmean3 + @testmean4 + @testmean5  \
       + @testmean6 + @testmean7 + @testmean8 + @testmean9 + @testmean10
 
-    # rand を Mock に差し替えたオブジェクト
-    @testcase_mock_rand = MockFizzBuzz.new
+    # rand_judge 用のテストデータ
+    # rand を Stub に差し替えたオブジェクトを生成
+    @testcase_mock_rand = FizzBuzz.new
+    stub( @testcase_mock_rand ).rand( 31 ) { 30 } # 指定した値 - 1 を返却する。
+    stub( @testcase_mock_rand ).rand( 10 ) {  9 }
+    stub( @testcase_mock_rand ).rand( 66 ) { 65 }
+    stub( @testcase_mock_rand ).rand( 95 ) { 94 }
+    stub( @testcase_mock_rand ).rand { 2 }
   end
 
   # test_ が呼び出された後にテストフレームワーク側で毎回呼び出される。
   #def teardown
   #end
+
+  # コンストラクタの例外テスト
+  def test_initialize_raise
+    assert_raise(ArgumentError,"開始の値または終了の値に数値以外の値を指定しました。") { FizzBuzz.new "Fizz",     5  }
+    assert_raise(ArgumentError,"開始の値または終了の値に数値以外の値を指定しました。") { FizzBuzz.new      5, "Buzz" }
+    assert_raise(ArgumentError,"開始の値または終了の値に数値以外の値を指定しました。") { FizzBuzz.new "Fizz", "Buzz" }
+
+    assert_raise(ArgumentError,"開始の値または終了の値に０以下の値を指定しました。") { FizzBuzz.new -1, 5  }
+    assert_raise(ArgumentError,"開始の値または終了の値に０以下の値を指定しました。") { FizzBuzz.new  0, 5  }
+    assert_raise(ArgumentError,"開始の値または終了の値に０以下の値を指定しました。") { FizzBuzz.new  5, 0  }
+    assert_raise(ArgumentError,"開始の値または終了の値に０以下の値を指定しました。") { FizzBuzz.new  5, -1 }
+    assert_raise(ArgumentError,"開始の値または終了の値に０以下の値を指定しました。") { FizzBuzz.new  0, 0  }
+
+    assert_raise(ArgumentError,"開始の値に終了の値と同じか大きい値を指定しました。") { FizzBuzz.new  5, 5  }
+    assert_raise(ArgumentError,"開始の値に終了の値と同じか大きい値を指定しました。") { FizzBuzz.new  6, 5  }
+  end
 
   # メソッド judge の例外テスト
   def test_judge_raise
@@ -98,15 +112,15 @@ class FizzBuzzTest < Test::Unit::TestCase
   def test_rand_judge_raise
     assert_raise(ArgumentError,"数値以外の値を指定しました。") { @testcase_mock_rand.rand_judge( "Fizz Buzz" ) }
 
-    assert_raise(ArgumentError,"０以下の値を指定しました。") { @testcase_mock_rand.rand_judge(  0 ) }
-    assert_raise(ArgumentError,"０以下の値を指定しました。") { @testcase_mock_rand.rand_judge( -1 ) }
+    assert_raise(ArgumentError,"０以下の値を指定しました。")   { @testcase_mock_rand.rand_judge(  0 ) }
+    assert_raise(ArgumentError,"０以下の値を指定しました。")   { @testcase_mock_rand.rand_judge( -1 ) }
   end
 
   # メソッド rand_judge のロジックテスト
   def test_rand_judge
-    assert_equal "Fizz Buzz", @testcase_mock_rand.rand_judge( 29 ) # 30
-    assert_equal "Fizz"     , @testcase_mock_rand.rand_judge(  8 ) #  9
-    assert_equal "Buzz"     , @testcase_mock_rand.rand_judge( 64 ) # 65
-    assert_equal 94         , @testcase_mock_rand.rand_judge( 93 ) # 94
+    assert_equal "Fizz Buzz", @testcase_mock_rand.rand_judge( 30 ) # 30 -> Fizz Buzz を返却するように Stub を設定。
+    assert_equal "Fizz"     , @testcase_mock_rand.rand_judge(  9 )
+    assert_equal "Buzz"     , @testcase_mock_rand.rand_judge( 65 )
+    assert_equal 94         , @testcase_mock_rand.rand_judge( 94 )
   end
 end

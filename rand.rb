@@ -3,7 +3,6 @@ base_dir  =  File.expand_path(File.join(File.dirname(__FILE__), "."))
 lib_dir   =  File.join(base_dir, "lib")
 $LOAD_PATH.unshift(lib_dir)
 
-require 'UsedFizzBuzz'
 require 'FizzBuzz'
 
 print "ランダムに数字を生成してその FizzBuzz 結果を表示します。\n"
